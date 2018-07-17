@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Product from "../product/product";
 import HttpService from "../services/http-service";
-
 const http = new HttpService();
 class App extends Component {
     constructor(props){
         super(props);
-        http.getProducts();
+        //Bind Functions
+        this.loadData = this.loadData.bind(this);
+        this.loadData();
     }
+    
+    loadData =() => {
+        http.getProducts().then(products =>{
+            console.log(products);
+        },err =>{
+            
+        });
+    }
+    
   render() {
     return (
       <div className="App">
@@ -16,9 +27,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to The Swag Shop</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="App-main">
+          <Product/>
+        </div>
       </div>
     );
   }
