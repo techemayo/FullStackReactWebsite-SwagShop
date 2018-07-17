@@ -1,5 +1,5 @@
-import NotificationService, {NOTIF_WISHLIST_CHANGED} from "./notification-service";
-ls = new NotificationService();
+import NotificationService,{NOTIF_WISHLIST_CHANGED} from "./notification-service";
+var ns = new NotificationService();
 let instance = null;
 var wishList =[];
 class DataService{

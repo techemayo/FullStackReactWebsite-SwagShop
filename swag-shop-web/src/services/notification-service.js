@@ -8,13 +8,13 @@ class NotificationService{
         }
         return instance;
     }
-    postNotification =(notifName,data =>{
+    postNotification =(notifName,data) =>{
         let obs =observers[notifName];
         for(var x=0; x<obs.length;x++){
             var obj=obs[x];
             obj.callBack(data);
         }
-    })
+    }
     removeObserver =(observer,notifName)=>{
         var obs =observers[notifName];
         if(!obs){
@@ -36,3 +36,4 @@ class NotificationService{
         observers[notifName].push(obj);
     }
 }
+export default NotificationService;

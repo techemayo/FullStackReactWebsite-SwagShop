@@ -2,39 +2,34 @@ import React, {Component} from 'react';
 import './wishlist.css';
 import ProductCondensed from "../product-condensed/product-condensed";
 import DataService from "../services/data-service";
-import NotificationService from "../services/notification-service";
+import NotificationService, {NOTIF_WISHLIST_CHANGED} from "../services/notification-service";
 
+let ns =new NotificationService();
 class WishList extends Component{
     
     constructor(props){
         super(props);
-        this.state={wishList:[
-            {
-            title:"Bologna Killer",
-                price:23.99,
-                _id:"asfdshfsfd"
-            },
-            {
-            title:"Foo Man Chu",
-                price:4.54,
-                _id:"asflkjasdewfd"
-            },
-            {
-            title:"Pipe Dream",
-                price:100,
-                _id:"977uoofsfd"
-            }   
-                             ]}
+        this.state={wishList:[]}
         //Bind functions
         this.createWishList = this.createWishList.bind(this);
+        this.onWishListChanged=this.onWishListChanged.bind(this);
     }
     
     createWishList =() =>{
         const list = this.state.wishList.map((product) =>
             <ProductCondensed product={product} key={product._id}/>
-                                       );
+          );
             return(list);
     }
+    componentDidMount(){
+        ns.addObserver(NOTIF_WISHLIST_CHANGED,this, this.onWishListChanged);
+    }
+componentWillUnmount(){
+    ns.removeObserver(this,NOTIF_WISHLIST_CHANGED);
+}
+onWishListChanged(newWishList){
+    this.setState({wishList: newWishList});
+}
     render(){
         return(
         <div className= "card">
